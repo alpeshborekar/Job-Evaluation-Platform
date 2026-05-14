@@ -58,6 +58,13 @@ class _DatabaseConfig:
         )
 
         if database_url:
+
+            database_url = database_url.replace(
+                "mysql://",
+                "mysql+pymysql://",
+                1,
+            )
+
             return database_url
 
         return (
