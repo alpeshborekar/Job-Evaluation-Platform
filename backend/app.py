@@ -19,6 +19,7 @@ logger = get_logger(__name__)
 
 
 def create_app() -> Flask:
+
     configure_logging(
         level=APP.log_level,
         log_file=APP.log_file,
@@ -38,6 +39,30 @@ def create_app() -> Flask:
     )
 
     init_db()
+
+    @app.get("/")
+    def home():
+        return (
+            jsonify(
+                {
+                    "message": "ResumeAI Backend Running",
+                    "status": "online",
+                }
+            ),
+            200,
+        )
+
+    @app.get("/health")
+    def health():
+        return (
+            jsonify(
+                {
+                    "status": "ok",
+                    "version": "2.0.0",
+                }
+            ),
+            200,
+        )
 
     from controllers.auth_controller import (
         auth_bp,
@@ -61,18 +86,6 @@ def create_app() -> Flask:
     app.register_blueprint(job_bp)
 
     register_error_handlers(app)
-
-    @app.get("/health")
-    def health():
-        return (
-            jsonify(
-                {
-                    "status": "ok",
-                    "version": "2.0.0",
-                }
-            ),
-            200,
-        )
 
     logger.info(
         "Flask app created (debug=%s)",
