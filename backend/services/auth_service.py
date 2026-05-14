@@ -3,20 +3,20 @@ from __future__ import annotations
 
 import bcrypt
 
-from.utils.database import (
+from utils.database import (
     db_session,
 )
 
-from.utils.errors import (
+from utils.errors import (
     AuthenticationError,
     ValidationError,
 )
 
-from.utils.logger import (
+from utils.logger import (
     get_logger,
 )
 
-from.repositories.user_repo import (
+from repositories.user_repo import (
     UserRepository,
 )
 

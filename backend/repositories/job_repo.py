@@ -3,15 +3,15 @@ from __future__ import annotations
 
 from sqlalchemy.orm import Session
 
-from.models.orm import (
+from models.orm import (
     Job,
 )
 
-from.utils.errors import (
+from utils.errors import (
     NotFoundError,
 )
 
-from.utils.logger import (
+from utils.logger import (
     get_logger,
 )
 

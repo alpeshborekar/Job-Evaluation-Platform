@@ -11,23 +11,23 @@ from pydantic import (
     ValidationError as PydanticValidationError,
 )
 
-from.validators.schemas import (
+from validators.schemas import (
     EvaluationRequest,
 )
 
-from.services.evaluation_orchestrator import (
+from services.evaluation_orchestrator import (
     EvaluationOrchestrator,
 )
 
-from.workers.tasks import (
+from workers.tasks import (
     get_task_result,
 )
 
-from.utils.errors import (
+from utils.errors import (
     ValidationError,
 )
 
-from.utils.logger import (
+from utils.logger import (
     get_logger,
 )
 

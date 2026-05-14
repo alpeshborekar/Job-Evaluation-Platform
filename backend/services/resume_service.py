@@ -7,26 +7,26 @@ from dataclasses import dataclass
 from werkzeug.datastructures import FileStorage
 from werkzeug.utils import secure_filename
 
-from.config.settings import APP
+from config.settings import APP
 
-from.repositories.resume_repo import (
+from repositories.resume_repo import (
     ResumeRepository,
 )
 
-from.utils.database import (
+from utils.database import (
     db_session,
 )
 
-from.utils.errors import (
+from utils.errors import (
     AuthorizationError,
     ValidationError,
 )
 
-from.utils.file_parser import (
+from utils.file_parser import (
     parse_file,
 )
 
-from.utils.logger import (
+from utils.logger import (
     get_logger,
 )
 

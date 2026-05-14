@@ -5,18 +5,18 @@ from dataclasses import dataclass
 
 import google.generativeai as genai
 
-from.config.settings import (
+from config.settings import (
     GEMINI,
     SCORING_WEIGHTS,
     RECOMMENDATION_THRESHOLDS,
 )
 
-from.utils.errors import (
+from utils.errors import (
     ExternalServiceError,
     ProcessingError,
 )
 
-from.utils.logger import (
+from utils.logger import (
     get_logger,
 )
 

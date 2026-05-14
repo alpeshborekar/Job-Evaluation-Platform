@@ -9,12 +9,12 @@ from flask import (
     jsonify,
 )
 
-from.utils.errors import (
+from utils.errors import (
     AuthenticationError,
     AuthorizationError,
 )
 
-from.utils.logger import (
+from utils.logger import (
     get_logger,
 )
 

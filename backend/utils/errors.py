@@ -3,7 +3,7 @@ from http import HTTPStatus
 
 from flask import Flask, jsonify
 
-from.utils.logger import get_logger
+from utils.logger import get_logger
 
 logger = get_logger(__name__)
 

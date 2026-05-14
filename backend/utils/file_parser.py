@@ -7,15 +7,15 @@ from dataclasses import dataclass
 import pdfminer.high_level
 import docx
 
-from.config.settings import APP
+from config.settings import APP
 
-from.utils.errors import (
+from utils.errors import (
     UnsupportedFileTypeError,
     FileTooLargeError,
     ProcessingError,
 )
 
-from.utils.logger import (
+from utils.logger import (
     get_logger,
 )
 

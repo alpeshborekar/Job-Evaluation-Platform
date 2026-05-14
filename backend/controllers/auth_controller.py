@@ -11,27 +11,27 @@ from pydantic import (
     ValidationError as PydanticError,
 )
 
-from.validators.schemas import (
+from validators.schemas import (
     RegisterRequest,
     LoginRequest,
     ChangePasswordRequest,
 )
 
-from.services.auth_service import (
+from services.auth_service import (
     AuthService,
 )
 
-from.utils.auth import (
+from utils.auth import (
     login_required,
     set_session,
     clear_session,
 )
 
-from.utils.errors import (
+from utils.errors import (
     ValidationError,
 )
 
-from.utils.logger import (
+from utils.logger import (
     get_logger,
 )
 

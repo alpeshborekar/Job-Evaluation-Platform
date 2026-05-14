@@ -2,14 +2,14 @@ from __future__ import annotations
 
 from sqlalchemy.orm import Session
 
-from.models.orm import User
+from models.orm import User
 
-from.utils.errors import (
+from utils.errors import (
     NotFoundError,
     ConflictError,
 )
 
-from.utils.logger import (
+from utils.logger import (
     get_logger,
 )
 
