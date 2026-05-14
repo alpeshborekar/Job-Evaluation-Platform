@@ -143,17 +143,25 @@ Total Score = (Skills Match × 0.45) + (Experience Relevance × 0.30) + (Keyword
 | < 45  | ❌ Reject |
 
 ---
+## Screenshots
 
-## 📸 Screenshots
+### Home Page
+![Home](screenshots/home.png)
 
+### Register Page
+![Register](screenshots/register.png)
 
-| Page | Preview |
-|------|---------|
-| **Landing Page** | ![Landing](https://via.placeholder.com/800x450/080c10/00d4ff?text=Landing+Page) |
-| **Dashboard** | ![Dashboard](https://via.placeholder.com/800x450/080c10/00d4ff?text=Dashboard) |
-| **Resume Upload** | ![Upload](https://via.placeholder.com/800x450/080c10/00d4ff?text=Resume+Upload) |
-| **Evaluation Result** | ![Result](https://via.placeholder.com/800x450/080c10/00d4ff?text=Evaluation+Result) |
-| **Job Postings** | ![Jobs](https://via.placeholder.com/800x450/080c10/00d4ff?text=Job+Postings) |
+### Dashboard
+![Dashboard](screenshots/dashboard.png)
+
+### Upload Resume
+![Upload](screenshots/upload.png)
+
+### Job Management
+![Jobs](screenshots/job.png)
+
+### Evaluation Result
+![Evaluation](screenshots/evaluation.png)
 
 ---
 
