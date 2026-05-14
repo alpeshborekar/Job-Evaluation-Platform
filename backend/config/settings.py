@@ -8,6 +8,7 @@ load_dotenv()
 
 @dataclass(frozen=True)
 class _DatabaseConfig:
+
     host: str = os.getenv(
         "MYSQL_HOST",
         "localhost",
@@ -51,6 +52,13 @@ class _DatabaseConfig:
 
     @property
     def url(self) -> str:
+
+        database_url = os.getenv(
+            "DATABASE_URL"
+        )
+
+        if database_url:
+            return database_url
 
         return (
             f"mysql+pymysql://"
@@ -153,9 +161,9 @@ class _GeminiConfig:
     )
 
     model: str = os.getenv(
-    "GEMINI_MODEL",
-    "gemini-1.5-flash",
-)
+        "GEMINI_MODEL",
+        "gemini-1.5-flash",
+    )
 
     max_tokens: int = 2048
 
