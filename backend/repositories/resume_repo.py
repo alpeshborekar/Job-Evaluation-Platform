@@ -5,16 +5,16 @@ from typing import TYPE_CHECKING
 
 from sqlalchemy.orm import Session
 
-from backend.models.orm import (
+from.models.orm import (
     Resume,
     JobStatus,
 )
 
-from backend.utils.errors import (
+from.utils.errors import (
     NotFoundError,
 )
 
-from backend.utils.logger import (
+from.utils.logger import (
     get_logger,
 )
 

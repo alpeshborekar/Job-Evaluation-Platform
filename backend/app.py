@@ -5,13 +5,13 @@ from datetime import timedelta
 from flask import Flask, jsonify
 from flask_cors import CORS
 
-from backend.config.settings import APP
-from backend.utils.logger import (
+from config.settings import APP
+from.utils.logger import (
     configure_logging,
     get_logger,
 )
-from backend.utils.database import init_db
-from backend.utils.errors import (
+from.utils.database import init_db
+from.utils.errors import (
     register_error_handlers,
 )
 
@@ -39,19 +39,19 @@ def create_app() -> Flask:
 
     init_db()
 
-    from backend.controllers.auth_controller import (
+    from.controllers.auth_controller import (
         auth_bp,
     )
 
-    from backend.controllers.resume_controller import (
+    from.controllers.resume_controller import (
         resume_bp,
     )
 
-    from backend.controllers.evaluation_controller import (
+    from.controllers.evaluation_controller import (
         evaluation_bp,
     )
 
-    from backend.controllers.job_controller import (
+    from.controllers.job_controller import (
         job_bp,
     )
 

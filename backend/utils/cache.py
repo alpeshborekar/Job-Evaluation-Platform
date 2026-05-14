@@ -5,8 +5,8 @@ from typing import Any
 
 import redis
 
-from backend.config.settings import REDIS
-from backend.utils.logger import get_logger
+from.config.settings import REDIS
+from.utils.logger import get_logger
 
 logger = get_logger(__name__)
 

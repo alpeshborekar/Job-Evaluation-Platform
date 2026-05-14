@@ -7,19 +7,19 @@ can use them directly without re-parsing every time.
 
 from __future__ import annotations
 
-from backend.utils.database import (
+from.utils.database import (
     db_session,
 )
 
-from backend.utils.errors import (
+from.utils.errors import (
     AuthorizationError,
 )
 
-from backend.utils.logger import (
+from.utils.logger import (
     get_logger,
 )
 
-from backend.repositories.job_repo import (
+from.repositories.job_repo import (
     JobRepository,
 )
 

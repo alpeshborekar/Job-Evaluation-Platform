@@ -11,25 +11,25 @@ from pydantic import (
     ValidationError as PydanticError,
 )
 
-from backend.validators.schemas import (
+from.validators.schemas import (
     JobCreateRequest,
     PaginationParams,
 )
 
-from backend.services.job_service import (
+from.services.job_service import (
     JobService,
 )
 
-from backend.utils.auth import (
+from.utils.auth import (
     login_required,
     optional_auth,
 )
 
-from backend.utils.errors import (
+from.utils.errors import (
     ValidationError,
 )
 
-from backend.utils.logger import (
+from.utils.logger import (
     get_logger,
 )
 

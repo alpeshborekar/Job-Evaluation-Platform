@@ -1,27 +1,27 @@
 from __future__ import annotations
 
-from backend.utils.database import (
+from.utils.database import (
     db_session,
 )
 
-from backend.utils.errors import (
+from.utils.errors import (
     NotFoundError,
     ProcessingError,
 )
 
-from backend.utils.logger import (
+from.utils.logger import (
     get_logger,
 )
 
-from backend.repositories.evaluation_repo import (
+from.repositories.evaluation_repo import (
     EvaluationRepository,
 )
 
-from backend.repositories.resume_repo import (
+from.repositories.resume_repo import (
     ResumeRepository,
 )
 
-from backend.models.orm import (
+from.models.orm import (
     JobStatus,
 )
 
@@ -69,7 +69,7 @@ class EvaluationOrchestrator:
 
             eval_id = ev.id
 
-        from backend.workers.tasks import (
+        from.workers.tasks import (
             run_evaluation_task,
         )
 
@@ -150,11 +150,11 @@ class EvaluationOrchestrator:
         eval_id: int,
     ) -> None:
 
-        from backend.services.evaluation_service import (
+        from.services.evaluation_service import (
             EvaluationService,
         )
 
-        from backend.models.orm import (
+        from.models.orm import (
             Job,
         )
 
@@ -266,7 +266,7 @@ class EvaluationOrchestrator:
             and ev.user_id != user_id
         ):
 
-            from backend.utils.errors import (
+            from.utils.errors import (
                 AuthorizationError,
             )
 

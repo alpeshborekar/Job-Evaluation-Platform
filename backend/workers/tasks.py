@@ -4,7 +4,7 @@ import time
 from celery import Celery
 from celery.utils.log import get_task_logger
 
-from backend.config.settings import CELERY
+from.config.settings import CELERY
 import backend.utils.cache as cache
 
 celery_app = Celery("ai_resume")
@@ -36,7 +36,7 @@ def parse_resume_task(self, resume_id: int) -> dict:
     t0 = time.monotonic()
 
     try:
-        from backend.services.resume_service import ResumeService
+        from.services.resume_service import ResumeService
 
         ResumeService().finalize_parse(resume_id)
 
@@ -110,7 +110,7 @@ def run_evaluation_task(self, eval_id: int) -> dict:
     t0 = time.monotonic()
 
     try:
-        from backend.services.evaluation_orchestrator import (
+        from.services.evaluation_orchestrator import (
             EvaluationOrchestrator,
         )
 

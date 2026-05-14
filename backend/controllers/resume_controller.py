@@ -7,27 +7,27 @@ from flask import (
     g,
 )
 
-from backend.validators.schemas import (
+from.validators.schemas import (
     ResumeUploadMeta,
 )
 
-from backend.services.resume_service import (
+from.services.resume_service import (
     ResumeService,
 )
 
-from backend.workers.tasks import (
+from.workers.tasks import (
     get_task_result,
 )
 
-from backend.utils.auth import (
+from.utils.auth import (
     login_required,
 )
 
-from backend.utils.errors import (
+from.utils.errors import (
     ValidationError,
 )
 
-from backend.utils.logger import (
+from.utils.logger import (
     get_logger,
 )
 
