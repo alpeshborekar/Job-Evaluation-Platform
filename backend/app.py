@@ -33,9 +33,16 @@ def create_app() -> Flask:
         hours=2
     )
 
+    # IMPORTANT FIXES
+    app.config["SESSION_COOKIE_SAMESITE"] = "None"
+    app.config["SESSION_COOKIE_SECURE"] = True
+
     CORS(
         app,
         supports_credentials=True,
+        origins=[
+            "https://resume-ai-ai-powered-ats-resume-ana.vercel.app"
+        ],
     )
 
     init_db()
