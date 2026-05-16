@@ -272,7 +272,7 @@ class EvaluationService:
     ) -> float:
 
         if not jd_skills:
-            return 50.0
+            return 0.0
 
         resume_set = {
             s.strip().lower()
@@ -294,6 +294,9 @@ class EvaluationService:
             "Matched skills: %s",
             matched,
         )
+
+        if not matched:
+            return 0.0
 
         score = (
             len(matched)
@@ -330,27 +333,22 @@ class EvaluationService:
         )
 
         if not jd_signals:
-            return 50.0
+            return 0.0
 
         overlap = len(
             resume_signals
             & jd_signals
         )
 
-        score = min(
-            overlap / len(jd_signals),
-            1.0,
+        if overlap == 0:
+            return 0.0
+
+        score = (
+            overlap / len(jd_signals)
         ) * 100
 
-        word_bonus = min(
-            len(
-                resume_text.split()
-            ) / 500,
-            1.0,
-        ) * 10
-
         return min(
-            score + word_bonus,
+            score,
             100.0,
         )
 
@@ -501,14 +499,10 @@ class EvaluationService:
                 exc,
             )
 
-            # return (
-            #     "AI feedback temporarily "
-            #     f"unavailable: {exc}"
-            # )
             return (
-    "AI feedback service is "
-    "currently unavailable."
-)
+                "AI feedback service is "
+                "currently unavailable."
+            )
 
     @staticmethod
     def _tokenize(
