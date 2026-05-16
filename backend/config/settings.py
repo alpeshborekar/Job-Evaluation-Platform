@@ -1,6 +1,8 @@
 from __future__ import annotations
+
 import os
 from dataclasses import dataclass, field
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -9,37 +11,10 @@ load_dotenv()
 @dataclass(frozen=True)
 class _DatabaseConfig:
 
-    host: str = os.getenv(
-        "MYSQL_HOST",
-        "localhost",
-    )
-
-    port: int = int(
-        os.getenv(
-            "MYSQL_PORT",
-            3306,
-        )
-    )
-
-    user: str = os.getenv(
-        "MYSQL_USER",
-        "root",
-    )
-
-    password: str = os.getenv(
-        "MYSQL_PASSWORD",
-        "",
-    )
-
-    db: str = os.getenv(
-        "MYSQL_DB",
-        "ai_resume",
-    )
-
     pool_size: int = int(
         os.getenv(
             "DB_POOL_SIZE",
-            10,
+            5,
         )
     )
 
@@ -54,25 +29,39 @@ class _DatabaseConfig:
     def url(self) -> str:
 
         database_url = os.getenv(
-            "DATABASE_URL"
+            "DATABASE_URL",
+            ""
         )
 
-        if database_url:
-
-            database_url = database_url.replace(
-                "mysql://",
-                "mysql+pymysql://",
-                1,
+        if not database_url:
+            raise ValueError(
+                "DATABASE_URL environment variable is missing."
             )
 
-            return database_url
+        # Render PostgreSQL URL fix
+        if database_url.startswith(
+            "postgres://"
+        ):
+            database_url = (
+                database_url.replace(
+                    "postgres://",
+                    "postgresql+psycopg2://",
+                    1,
+                )
+            )
 
-        return (
-            f"mysql+pymysql://"
-            f"{self.user}:{self.password}"
-            f"@{self.host}:{self.port}"
-            f"/{self.db}?charset=utf8mb4"
-        )
+        elif database_url.startswith(
+            "postgresql://"
+        ):
+            database_url = (
+                database_url.replace(
+                    "postgresql://",
+                    "postgresql+psycopg2://",
+                    1,
+                )
+            )
+
+        return database_url
 
 
 @dataclass(frozen=True)
