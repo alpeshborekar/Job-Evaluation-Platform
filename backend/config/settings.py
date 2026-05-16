@@ -67,27 +67,9 @@ class _DatabaseConfig:
 @dataclass(frozen=True)
 class _RedisConfig:
 
-    host: str = os.getenv(
-        "REDIS_HOST",
-        "localhost",
-    )
-
-    port: int = int(
-        os.getenv(
-            "REDIS_PORT",
-            6379,
-        )
-    )
-
-    db: int = int(
-        os.getenv(
-            "REDIS_DB",
-            0,
-        )
-    )
-
-    password: str | None = os.getenv(
-        "REDIS_PASSWORD"
+    url: str = os.getenv(
+        "REDIS_URL",
+        "redis://localhost:6379/0",
     )
 
     evaluation_ttl: int = (
@@ -101,23 +83,6 @@ class _RedisConfig:
     session_ttl: int = (
         60 * 60 * 2
     )
-
-    @property
-    def url(self) -> str:
-
-        auth = (
-            f":{self.password}@"
-            if self.password
-            else ""
-        )
-
-        return (
-            f"redis://"
-            f"{auth}"
-            f"{self.host}:"
-            f"{self.port}/"
-            f"{self.db}"
-        )
 
 
 @dataclass(frozen=True)
