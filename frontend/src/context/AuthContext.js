@@ -50,7 +50,7 @@ export function AuthProvider({ children }) {
     // Save JWT token
     localStorage.setItem(
       "token",
-      r.data.token
+      r.data.access_token
     );
 
     setUser(r.data.user);
