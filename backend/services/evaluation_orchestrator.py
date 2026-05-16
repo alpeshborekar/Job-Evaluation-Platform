@@ -69,42 +69,25 @@ class EvaluationOrchestrator:
 
             eval_id = ev.id
 
-        from workers.tasks import (
-            run_evaluation_task,
-        )
-
-        task = run_evaluation_task.delay(
-            eval_id
-        )
-
-        with db_session() as session:
-
             EvaluationRepository(
                 session
             ).mark_processing(
                 eval_id,
-                task.id,
+                None,
             )
 
-        logger.info(
-            (
-                "Evaluation queued "
-                "eval_id=%s "
-                "resume=%s "
-                "job=%s "
-                "task_id=%s"
-            ),
-            eval_id,
-            resume_id,
-            job_id,
-            task.id,
-        )
+        # DIRECT evaluation instead of Celery
+        self.finalize(eval_id)
 
-        return {
-            "evaluation_id": eval_id,
-            "task_id": task.id,
-            "status": "pending",
-        }
+        with db_session() as session:
+
+            ev = EvaluationRepository(
+                session
+            ).get_by_id(
+                eval_id
+            )
+
+            return self._serialize(ev)
 
     def get(
         self,
@@ -126,24 +109,7 @@ class EvaluationOrchestrator:
                 requesting_user_id,
             )
 
-            if (
-                ev.status
-                == JobStatus.COMPLETED
-            ):
-                return self._serialize(
-                    ev
-                )
-
-            return {
-                "evaluation_id": ev.id,
-                "status": (
-                    ev.status.value
-                ),
-                "task_id": ev.task_id,
-                "error": (
-                    ev.error_detail
-                ),
-            }
+            return self._serialize(ev)
 
     def finalize(
         self,
