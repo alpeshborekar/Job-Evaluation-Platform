@@ -19,10 +19,6 @@ from services.evaluation_orchestrator import (
     EvaluationOrchestrator,
 )
 
-from workers.tasks import (
-    get_task_result,
-)
-
 from utils.errors import (
     ValidationError,
 )
@@ -57,6 +53,7 @@ def submit_evaluation():
         )
 
     try:
+
         payload = (
             EvaluationRequest.model_validate(
                 body
@@ -84,16 +81,9 @@ def submit_evaluation():
         user_id=user_id,
     )
 
-    status_code = (
-        200
-        if result.get("total_score")
-        is not None
-        else 202
-    )
-
     return (
         jsonify(result),
-        status_code,
+        200,
     )
 
 
@@ -111,16 +101,6 @@ def get_evaluation(
     result = _orchestrator.get(
         eval_id,
         requesting_user_id=user_id,
-    )
-
-    return jsonify(result), 200
-
-
-@evaluation_bp.get("/task/<task_id>")
-def poll_task(task_id: str):
-
-    result = get_task_result(
-        task_id
     )
 
     return jsonify(result), 200

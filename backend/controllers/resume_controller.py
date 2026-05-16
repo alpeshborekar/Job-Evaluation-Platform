@@ -7,16 +7,16 @@ from flask import (
     g,
 )
 
-from pydantic import (
-    ValidationError as PydanticValidationError,
-)
-
 from validators.schemas import (
-    EvaluationRequest,
+    ResumeUploadMeta,
 )
 
-from services.evaluation_orchestrator import (
-    EvaluationOrchestrator,
+from services.resume_service import (
+    ResumeService,
+)
+
+from utils.auth import (
+    login_required,
 )
 
 from utils.errors import (
@@ -29,68 +29,83 @@ from utils.logger import (
 
 logger = get_logger(__name__)
 
-evaluation_bp = Blueprint(
-    "evaluation",
+resume_bp = Blueprint(
+    "resume",
     __name__,
-    url_prefix="/evaluation",
+    url_prefix="/resume",
 )
 
-_orchestrator = (
-    EvaluationOrchestrator()
-)
+_svc = ResumeService()
 
 
-@evaluation_bp.post("/")
-def submit_evaluation():
+@resume_bp.post("/upload")
+@login_required
+def upload_resume():
 
-    body = request.get_json(
-        silent=True
-    )
-
-    if not body:
+    if "resume" not in request.files:
         raise ValidationError(
-            "Request body must be JSON."
-        )
-
-    try:
-
-        payload = (
-            EvaluationRequest.model_validate(
-                body
+            (
+                "No file found. "
+                "Send the file under "
+                "the 'resume' field."
             )
         )
 
-    except (
-        PydanticValidationError
-    ) as exc:
+    file = request.files["resume"]
 
+    if not file.filename:
         raise ValidationError(
-            "Invalid request.",
-            {"fields": exc.errors()},
+            "Filename is empty."
         )
 
+    meta = ResumeUploadMeta(
+        email=request.form.get("email"),
+        send_report=(
+            request.form.get(
+                "send_report",
+                "false",
+            ).lower()
+            == "true"
+        ),
+    )
+
     user_id: int | None = getattr(
         g,
         "user_id",
         None,
     )
 
-    result = _orchestrator.submit(
-        resume_id=payload.resume_id,
-        job_id=payload.job_id,
+    result = _svc.upload(
+        file,
         user_id=user_id,
+        email=meta.email,
     )
 
-    return (
-        jsonify(result),
-        200,
-    )
+    return jsonify(result), 200
 
 
-@evaluation_bp.get("/<int:eval_id>")
-def get_evaluation(
-    eval_id: int,
+@resume_bp.get("/<int:resume_id>")
+@login_required
+def get_resume(
+    resume_id: int,
 ):
+    user_id: int | None = getattr(
+        g,
+        "user_id",
+        None,
+    )
+
+    result = _svc.get(
+        resume_id,
+        requesting_user_id=user_id,
+    )
+
+    return jsonify(result), 200
+
+
+@resume_bp.get("/")
+@login_required
+def list_resumes():
 
     user_id: int | None = getattr(
         g,
@@ -98,9 +113,27 @@ def get_evaluation(
         None,
     )
 
-    result = _orchestrator.get(
-        eval_id,
-        requesting_user_id=user_id,
+    page = int(
+        request.args.get(
+            "page",
+            1,
+        )
+    )
+
+    per_page = min(
+        int(
+            request.args.get(
+                "per_page",
+                20,
+            )
+        ),
+        100,
+    )
+
+    result = _svc.list_for_user(
+        user_id,
+        page=page,
+        per_page=per_page,
     )
 
     return jsonify(result), 200
